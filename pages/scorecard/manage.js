@@ -36,7 +36,8 @@ export default function Manage(){
     }
 }, [])
 
-console.log(scoreCard)
+
+
     return(
             <>
             <div className='overflow-x-hidden'>

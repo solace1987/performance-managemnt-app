@@ -42,21 +42,26 @@ const kpiTitleFormater = (kpi) => {
 
 const reFormatData = (scorecard) => {
     //function for extracting name from array of object
+   
     const objectEstractor = (objectArr) => {
+        if(objectArr != undefined){
         const arr = []
         objectArr.map(obj => {
             arr.push(obj['name'])
-
+        
         })
         return arr
     }
+    }
      //Get list of kraarea
+     
     const kraAreaList = objectEstractor(scorecard.kraAreas)
 
      //Get list of Kra in each kraArea
     let kraList = [];
 
     //filter through all kraArea while extrating kra names from each
+    if(kraAreaList != undefined){
     kraAreaList.map(kraAreaName => {
         const spec = scorecard.kraAreas.filter(kraArea1 => kraArea1.name === kraAreaName)
 
@@ -64,7 +69,7 @@ const reFormatData = (scorecard) => {
         // created object containing kraArea with their respective kras in an array
         kraList.push(kraAreaObj)
 
-    })
+    })}
 
     //Get the different KPI
     const kpiList = []
@@ -165,6 +170,37 @@ const Unit = [
 
 ]
 
+const kpiValueMapper = (data)=>{
+    let kraArea=-1;
+    let kra=-1;
+    let kpi=-1;  
+    let element = [];
+   
+    
+    for(let i=0; i<data.length; i++){
+        
+      if(data[i][1] != "" ){
+        kra= kra + 1;
+        kpi = 0;
+      }
+  
+        if(data[i][0] != "" ){
+        kraArea= kraArea + 1;
+        kra= 0;
+        kpi = 0;
+      
+      }
+       else if(data[i][1] == "" ){
+        kpi = kpi+1;
+         
+      }
+      
+      element.push([kraArea,kra,kpi])
+    }
+      return element;
+   
+  }
+
 export {
     localSave,
     localFetch,
@@ -173,5 +209,6 @@ export {
     getObjectValue,
     kpiTitleFormater,
     reFormatData,
-    Unit
+    Unit, 
+    kpiValueMapper
 }

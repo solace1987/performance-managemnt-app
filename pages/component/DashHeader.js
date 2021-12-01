@@ -2,7 +2,7 @@ import { localFetch } from '../../public/api/helper.js';
 import React, { useState, useEffect } from 'react';
 import { readUser } from '../../public/api/userApi.js';
 import Link from 'next/link'
-
+import AdminLink from './AdminLink.js';
 export default function Dashboard() {
     let currentUser = '';
     let currentToken = ''
@@ -11,9 +11,9 @@ export default function Dashboard() {
         lastname: "",
         email: '',
         unit: "",
-        designation: ""
+        designation: "",
+        scorecardId:""
     })
-
 
     useEffect(() => {
         const abortController = new AbortController()
@@ -38,7 +38,6 @@ export default function Dashboard() {
             abortController.abort()
         }
     }, [])
-    //console.log(values)
 
 
 
@@ -61,9 +60,8 @@ export default function Dashboard() {
                     <Link href="/managescorecard">
                         <a className=''>REPORT</a>
                     </Link>
-                    <Link href="/admin/manage">
-                        <a className=''>ADMIN</a>
-                    </Link>
+                    <AdminLink role = {values.role}/>
+                   
                 </div>
                 <Link href="/edituser">
                     <a>
