@@ -4,7 +4,7 @@ export default function ScorecardTable(props){
     
     return (
 <>
-        <div className='mt-8 text-xs w-11/12'>
+        <div className='mt-8 text-sm w-12/12'>
         <table>
             <thead className='border-b-2'>
                 <tr>
@@ -16,10 +16,12 @@ export default function ScorecardTable(props){
                     <th >TRACKING</th>                    
                     <th >SELF SCORE %</th>
                     <th > LINE HEAD SCORE</th> 
+                    <th > HOD SCORE</th> 
                     <th >3RD PARTY SCORE/H.O.D</th>
                     <th >WEIGHT</th>
                     <th >RATING (1-4)</th>
                     <th >WEIGHT X RATING</th>
+                    <th > COMMENT</th> 
 
                 </tr>
             </thead>
@@ -27,7 +29,7 @@ export default function ScorecardTable(props){
                 
                 {props.data!==undefined?props.data.map((data,index)=>{
                     return(
-                    <tr className='text-center border-b-2'>
+                    <tr className='text-center border-b-2 h-12'>
                     <td >{data[0]}</td>
                     <td>{data[1]}</td>
                     <td>{data[2].name}</td>
@@ -36,10 +38,12 @@ export default function ScorecardTable(props){
                     <td>{data[2].tracking}</td>
                     <td>{data[2].selfScore}</td>
                     <td>{data[2].LineHeadScore}</td>
+                    <td>{data[2].hodScore}</td>
                     <td>{data[2].thirdPartyScore}</td>
                     <td>{data[2].weight}</td>
                     <td>{data[2].Rating}</td>
                     <td>{data[2].WeightbyRating}</td>
+                    <td>{data[2].comment}</td>
                     </tr>)
 
                 }):<></>}

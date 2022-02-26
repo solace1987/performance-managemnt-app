@@ -30,6 +30,7 @@ export default function Dashboard() {
             } else {
 
                 setValues((prevState) => { return { ...prevState, ...data } })
+                
 
             }
         })
@@ -57,9 +58,13 @@ export default function Dashboard() {
                     <Link href="/scorecard/manage">
                         <a >SCORE CARDS</a>
                     </Link>
-                    <Link href="/managescorecard">
+
+                    <div className={values.role == "Admin"||values.role==="Super"?"":"hidden"} >
+                    <Link  href="/scorecard/allscorecard">
                         <a className=''>REPORT</a>
                     </Link>
+                    </div>
+        
                     <AdminLink role = {values.role}/>
                    
                 </div>

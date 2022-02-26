@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
 export default function AdminLink(props) {
-  console.log(props.role)
-        if (props.role == "Admin")
+  
+        if (props.role == "Admin"||props.role==="Super")
             {
                 return (
                      <> 

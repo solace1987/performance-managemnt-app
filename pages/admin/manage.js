@@ -2,6 +2,7 @@ import {reFormatData } from "../../public/api/helper";
 import createImg from '../../public/image/createCircle.svg'
 import manageImg from '../../public/image/Manage.svg'
 import permitImg from '../../public/image/permission.svg'
+import evalImg from '../../public/image/evaluation.svg'
 import Image from 'next/image'
 import { localFetch } from '../../public/api/helper.js';
 import { listScorecard } from "../../public/api/scorecardApi.js"
@@ -80,6 +81,12 @@ export default function ManageScorecard() {
                                 <h2 className='text-center mt-4 text-xs font-black'>Permissions</h2>
                             </div>
                         </Link>
+                        <Link href="/scorecard/allsubmittedCard?name=thirdparty">
+                            <div className='flex flex-col justify-center bg-red-500 w-32 h-36 rounded cursor-pointer'>
+                                <Image src={evalImg } width={70} height={70} />
+                                <h2 className='text-center mt-4 text-xs font-black'>Evaluate as Third Party</h2>
+                            </div>
+                        </Link>
                     </div>
                     {
                         ispreview === false ? (<div className='mt-8 p-4'>
@@ -87,6 +94,7 @@ export default function ManageScorecard() {
                             <table className='w-full mt-4'>
                                 <thead className='border-b-2 font-md  text-gray-600'>
                                     <tr className=''>
+                                        <th>S/N</th>
                                         <th >Department</th>
                                         <th >Unit</th>
                                         <th >Designation</th>
@@ -99,7 +107,8 @@ export default function ManageScorecard() {
 
                                     {scoreCard.map((data, index) => {
                                         return (
-                                            <tr className='text-center' key={index}>
+                                            <tr className='text-center py-4' key={index}>
+                                                <td>{index+1}</td>
                                                 <td>{data.department}</td>
                                                 <td>{data.unit}</td>
                                                 <td>{data.designation}</td>

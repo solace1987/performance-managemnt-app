@@ -21,13 +21,12 @@ export default function ManageUser() {
         users[index] = user
         setValues([...users])
     }
-    const role=["Staff", "Reviewer", "Admin"]
+    const role=["Staff", "Reviewer", "Admin","Super"]
     const onEdit = (e) => {
         SetSelectedNum(Number(e.target.id))
         SetIsdisplay(!isDisplay)
         if (isDisplay) {
             const selectedUser = values[selectedNum]
-            console.log(selectedNum)
             let currentToken = ''
             if (typeof window !== "undefined") {
 
@@ -97,6 +96,7 @@ const input='bg-white'
                     <table className='w-full mt-4'>
                         <thead className='border-b-2 font-md  text-gray-600'>
                             <tr >
+                                <th>S/N</th>
                                 <th className='text-left' >Name</th>
                                 <th className="text-left">Unit</th>
                                 <th >Designation</th>
@@ -108,6 +108,7 @@ const input='bg-white'
                             {values.map((data, index) => {
                                 return (
                                     <tr className={index === selectedNum && isDisplay ? "text-center border-b-2 h-14 bg-purple-100" : "text-center border-b-2 h-14"}>
+                                        <td>{index+1}</td>
                                         <td className="text-left"> <input className={input} type='text' disabled="disabled" value={`${data.firstname} ${data.lastname}`} /> </td>
 
                                         <td onChange={handleChange('unit', index)} className="text-left"><input className={input} type='text' disabled={index === selectedNum && isDisplay ? "" : "disabled"} value={data.unit} /></td>

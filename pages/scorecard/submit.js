@@ -1,20 +1,23 @@
-import KraAreas from "../component/KraAreas";
+
 import SubmitTable from "../component/submitTable";
-import {
-  reFormatData,
-  localFetch
-} from "../../public/api/helper";
+import { reFormatData, localFetch,getMonth } from "../../public/api/helper";
 import { readScorecard, SubmitScore } from "../../public/api/scorecardApi";
 import { useState, useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 export default function SubmitScoreCard(props) {
-    const router = useRouter()
-    const [scoreCard, SetScorecard] = useState({});
-    let currentToken = "";
-    let currentUser = {};
+  const router = useRouter();
+  const [scoreCard, SetScorecard] = useState({});
+  let currentToken = "";
+  let currentUser = {};
 
-    useEffect(() => {
+  const handleChange = name => event => {
+    SetScorecard({ ...scoreCard, [name]: event.target.value })
+
+}
+  useEffect(() => {
     const abortController = new AbortController();
     const signal = abortController.signal;
     if (typeof window !== "undefined") {
@@ -27,8 +30,9 @@ export default function SubmitScoreCard(props) {
         if (data && data.error) {
           console.log(data.error);
         } else {
-            data ={...data,owner:currentUser._id}
+          data = { ...data, owner: currentUser._id, evaluationPeriod:`${getMonth(new Date().getUTCMonth()-1)} ${new Date().getFullYear()}`, staff:`${currentUser.lastName} ${currentUser.firstName}` };
           SetScorecard(data);
+          
         }
       }
     );
@@ -36,18 +40,18 @@ export default function SubmitScoreCard(props) {
       abortController.abort();
     };
   }, []);
-console.log(scoreCard)
+
   const data = reFormatData(scoreCard);
 
   const clickSubmit = (e) => {
-       if (typeof window !== "undefined") {
-         currentToken = localFetch("token");
+    if (typeof window !== "undefined") {
+      currentToken = localFetch("token");
     }
     e.preventDefault();
     SubmitScore(scoreCard, currentToken).then((data) => {});
     router.push("/scorecard/manage");
   };
-
+ 
   return (
     <>
       <div className="bg-indigo-100 pl-20">
@@ -71,32 +75,34 @@ console.log(scoreCard)
             id="dept"
             className="border-2 shadow-sm ml-2 mb-2 mr-6 pl-2"
           />
-          <label className="ml-2 text-gray-800">Owner Designation</label>
-          <input
-            id="sName"
-            value={scoreCard["designation"]}
-            className="border-2 text-gray-800 shadow-sm ml-2 mb-2 mr-6 pl-2"
-          />
+         
 
           <label className="ml-2 text-gray-700">Evaluation Period</label>
-          <input
-            type="date"
-            value={scoreCard["evaluationPeriod"]}
-            id="EDate"
-            className="border-2 shadow-sm ml-2 mb-2 mr-6 pl-2"
-          />
+
+          <Dropdown onChange={(event)=>{
+                      const month = event.value;
+                      SetScorecard({...scoreCard,evaluationPeriod:`${month} ${new Date().getFullYear()}`})
+                      }} 
+                      className=" text-gray-800 shadow-sm  mb-2 mr-6 pl-2" 
+                      options={['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']}  
+                      value={scoreCard.evaluationPeriod} 
+                      placeholder="Select Month" 
+                      />
+                      
+          <label className="ml-2 text-gray-700" >Submision Date</label>
+          <input type='date' value={new Date().now} onChange={handleChange('dateSubmited')} className="border-2 shadow-sm ml-2 mb-2 mr-6 pl-2"  />
           <label className="ml-2 text-gray-800">Rating</label>
           <input
             id="sName"
             value={scoreCard["rating"]}
-            className="border-2 text-gray-800 shadow-sm ml-2 mb-2 mr-6 pl-2"
+            className="border-2 teixt-gray-800 shadow-sm ml-2 mb-2 mr-6 pl-2"
           />
         </fieldset>
       </div>
       <div className="pl-20 pb-10 bg-indigo-100 h-full flex flex-row-reverse">
         <button
           type="button"
-          className="m-4 h-10 w-24 self-center p-2 text-white border bg-green-400"
+          className="m-4 h-10 w-24 self-center p-2 text-white border bg-green-800"
           onClick={clickSubmit}
         >
           Submit
