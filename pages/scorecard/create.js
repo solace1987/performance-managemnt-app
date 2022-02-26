@@ -18,10 +18,12 @@ export default function Manage() {
         tracking: "",
         selfScore: 0,
         LineHeadScore: 0,
+        hodScore:0,
         thirdPartyScore: 0,
         weight: 0,
         Rating: 0,
-        WeightbyRating: 0
+        WeightbyRating: 0,
+        comment:"",
     })
 
     const [kra, setKra] = useState({
@@ -62,7 +64,7 @@ export default function Manage() {
         createScorecard(scoreCard, currentToken).then((data) => {
             
         })
-        router.push('/scorecard/manage-scorecard')
+        router.push('/admin/manage')
     }
     return (
         <div>

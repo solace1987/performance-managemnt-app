@@ -69,7 +69,7 @@ export default function ManageUser() {
                 data.forEach(element => {
                     tempArr.push({ label: `${element.department}: ${element.unit}| ${element.designation}-${element.version} `, value: element._id })
                     SetScorecard(tempArr)
-                    console.log(tempArr)
+                    
                 });
 
 
@@ -101,14 +101,14 @@ export default function ManageUser() {
 
                 const tempArr = []
                 data.forEach(element => {
-                    if (element.role === "Reviewer") {
+                    if (element.role === "Reviewer" || element.role === "Super") {
                         tempArr.push({ label: `${element.firstname} ${element.lastname}`, value: element.email })
                         SetUserList(tempArr)
                     }
                 });
 
                 setValues(data)
-                console.log(data)
+                
             }
         })
 
@@ -144,7 +144,8 @@ export default function ManageUser() {
                                 <th className="text-left">Unit</th>
                                 <th >Scorecard</th>
                                 <th>Line Head</th>
-                                <th>HOD/Third-Party</th>
+                                <th>HOD</th>
+                                <th>Third-Party</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -198,6 +199,22 @@ export default function ManageUser() {
 
                                             }}
                                                 disabled={index === selectedNum && isDisplay ? "" : "disabled"} className="mr-4" options={userList} value={values[index].HOD} placeholder="Select HOD" />
+
+
+
+                                        </td>
+                                        <td className='text-xs'>
+
+                                            <Dropdown onChange={(event) => {
+                                                const user = values[index];
+                                                user['thirdParty'] = event.value
+                                                const users = values;
+                                                users[index] = user
+                                                setValues([...users])
+
+
+                                            }}
+                                                disabled={index === selectedNum && isDisplay ? "" : "disabled"} className="mr-4" options={userList} value={values[index].thirdParty} placeholder="Select 3rd Party" />
 
 
 

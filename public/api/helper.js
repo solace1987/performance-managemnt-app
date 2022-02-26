@@ -1,4 +1,8 @@
+const getMonth = (month)=>{
+const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+return months[month]
 
+}
 const localSave = (name, data) => {
 
     sessionStorage.setItem(name, JSON.stringify(data));
@@ -6,8 +10,10 @@ const localSave = (name, data) => {
 };
 
 const localFetch = (itemName) => {
+    if (typeof window !== "undefined") {
     let data = sessionStorage.getItem(itemName);
     return JSON.parse(data)
+}
 }
 
 const localRemove = () => {
@@ -35,6 +41,8 @@ const kpiTitleFormater = (kpi) => {
         case "weight": return "Weight";
         case "Rating": return "Rating";
         case "WeightbyRating": return "Weight by Rating";
+        case "hodScore": return "HOD Score";
+        case "comment": return "Comment";
 
     }
 }
@@ -42,8 +50,8 @@ const kpiTitleFormater = (kpi) => {
 
 const reFormatData = (scorecard) => {
     //function for extracting name from array of object
-   
-    const objectEstractor = (objectArr) => {
+    if(scorecard!=undefined) {
+       const objectEstractor = (objectArr) => {
         if(objectArr != undefined){
         const arr = []
         objectArr.map(obj => {
@@ -118,6 +126,7 @@ let kraSpan=0;
 
     return ({data:dataArray,span:[kraAreaSpan, kraSpan] })
 }
+}
 
 
 const Unit = [
@@ -176,7 +185,7 @@ const kpiValueMapper = (data)=>{
     let kpi=-1;  
     let element = [];
    
-    
+    if(data!= undefined){
     for(let i=0; i<data.length; i++){
         
       if(data[i][1] != "" ){
@@ -196,7 +205,7 @@ const kpiValueMapper = (data)=>{
       }
       
       element.push([kraArea,kra,kpi])
-    }
+    }}
       return element;
    
   }
@@ -210,5 +219,6 @@ export {
     kpiTitleFormater,
     reFormatData,
     Unit, 
-    kpiValueMapper
+    kpiValueMapper,
+    getMonth
 }

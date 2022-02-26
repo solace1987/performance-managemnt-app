@@ -1,5 +1,5 @@
 const config= {
-    server: 'http://localhost:4000',
+    server: 'http://192.168.88.86:4000',
 
 
 }
